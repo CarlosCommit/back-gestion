@@ -21,6 +21,7 @@ public class ProductoServiceImp {
 	
 	public Producto getProductoByName(String name)
 	{
-		return productoRepository.findByNombre(name);
+		Producto producto =  productoRepository.findByNombre(name);
+		return producto;
 	}
 }

@@ -1,6 +1,7 @@
 package comm.xuxuy.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Factura {
 	private long numero; 
 	@ManyToMany(cascade = {jakarta.persistence.CascadeType.ALL},
 	           fetch = jakarta.persistence.FetchType.EAGER)
-	private List<Producto> productos;
+	private List<Producto> productos = new ArrayList<Producto>();
 	@OneToOne(mappedBy = "factura")
 	private Venta venta;
 	
@@ -34,12 +35,16 @@ public class Factura {
 		return id;
 	}
 	
-	public Factura(String nombre, String apellido, String dni, List<Producto> productos)
+	public Factura() {
+		
+	}
+	
+	public Factura(String nombre, String apellido, String dni)
 	{
 	    nombreCliente = nombre; 
 	    apellidoCliente = apellido; 
 	    dniCliente = dni;
-	    this.productos = productos; 
+	    fechaDeAlta = LocalDate.now();
 	}
 	
 
