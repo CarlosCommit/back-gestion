@@ -2,6 +2,8 @@ package comm.xuxuy.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Table(name="ventas")
 @Entity
@@ -21,10 +24,12 @@ public class Venta {
 	private LocalDate fecha; 
 	private LocalTime hora;
 	private double monto;
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne()
 	private Factura factura;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Empleado empleado; 
+	
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -54,6 +59,12 @@ public class Venta {
 	}
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	} 
 	
 	

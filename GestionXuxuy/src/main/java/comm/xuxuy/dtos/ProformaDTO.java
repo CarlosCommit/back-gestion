@@ -3,20 +3,19 @@ package comm.xuxuy.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
-import comm.xuxuy.model.Producto;
 
 public class ProformaDTO {
 
 	private String nombreCliente;
 	private String apellidoCliente;
 	private String dniCliente;
-	private List<Producto> productos = new ArrayList<>(); 
+	private List<ProductoDTO> productos = new ArrayList<>(); 
 	
-	public List<Producto> getProductos() {
+	public List<ProductoDTO> getProductos() {
 		return productos;
 	}
 	
-	public void setProductos(List<Producto> productos) {
+	public void setProductos(List<ProductoDTO> productos) {
 		this.productos = productos;
 	}
 	public String getNombreCliente() {

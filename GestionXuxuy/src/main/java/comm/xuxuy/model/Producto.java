@@ -1,9 +1,14 @@
 package comm.xuxuy.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Table(name="productos")
@@ -15,9 +20,17 @@ public class Producto {
 	private String nombre;
 	private double precio;
 	private int stock;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	private List<FacturaDetalle> facturaDetalle = new ArrayList<FacturaDetalle>();
 	
 	
 	
+	public List<FacturaDetalle> getFacturaDetalle() {
+		return facturaDetalle;
+	}
+	public void setFacturaDetalle(List<FacturaDetalle> facturaDetalle) {
+		this.facturaDetalle = facturaDetalle;
+	}
 	public long getId() {
 		return id;
 	}

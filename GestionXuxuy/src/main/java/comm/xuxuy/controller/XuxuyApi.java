@@ -27,9 +27,8 @@ public class XuxuyApi {
 		Map<String, Object> response = new HashMap<>();
 		//COBRO Y GENERAR LA VENTA		
 		//GENERAMOS FACTURA
-		Factura factura = facturaService.generarFactura(proforma);
-		factura = facturaService.registrarFactura(factura);
-		response.put("Factura guardado:",factura);
+		Factura factura = facturaService.generarFactura(proforma); 
+		response.put("Factura guardado:",facturaService.registrarFactura(factura));
 		return new ResponseEntity<Map<String,Object> >(response,HttpStatus.OK); 	
 	}
 	

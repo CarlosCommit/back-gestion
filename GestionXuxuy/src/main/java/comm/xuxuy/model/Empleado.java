@@ -42,6 +42,12 @@ public class Empleado {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	
 	

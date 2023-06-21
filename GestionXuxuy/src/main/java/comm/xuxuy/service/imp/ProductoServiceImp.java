@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import comm.xuxuy.dtos.ProductoDTO;
 import comm.xuxuy.model.Producto;
 import comm.xuxuy.repository.ProductoDAO;
 
@@ -19,9 +20,14 @@ public class ProductoServiceImp {
 		return productoRepository.findAll();
 	}
 	
-	public Producto getProductoByName(String name)
+	public ProductoDTO getProductoByName(String name)
 	{
 		Producto producto =  productoRepository.findByNombre(name);
-		return producto;
+		ProductoDTO productoRespuesta = new ProductoDTO();
+		productoRespuesta.setId(producto.getId());
+		productoRespuesta.setNombre(producto.getNombre());
+		productoRespuesta.setPrecio(producto.getPrecio());
+		productoRespuesta.setStock(producto.getStock());
+		return productoRespuesta;
 	}
 }

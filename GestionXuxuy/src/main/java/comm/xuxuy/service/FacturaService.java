@@ -7,6 +7,6 @@ public interface FacturaService {
 
 	public Factura generarFactura(ProformaDTO proforma);
 	
-	public Factura registrarFactura(Factura factura);
+	public ProformaDTO registrarFactura(Factura factura);
 	
 }
