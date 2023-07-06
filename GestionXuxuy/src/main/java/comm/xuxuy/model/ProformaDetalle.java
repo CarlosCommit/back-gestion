@@ -8,11 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-@Table(name="factura_detalle")
 @Entity
-public class FacturaDetalle {
-
+@Table
+public class ProformaDetalle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id; 
@@ -23,9 +21,18 @@ public class FacturaDetalle {
 	
 	//Factura
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Factura factura;
+	private Proforma proforma;
 	
 	private int cantidad;
+
+	
+	public Proforma getProforma() {
+		return proforma;
+	}
+
+	public void setProforma(Proforma proforma) {
+		this.proforma = proforma;
+	}
 
 	public long getId() {
 		return id;
@@ -43,13 +50,6 @@ public class FacturaDetalle {
 		this.producto = producto;
 	}
 
-	public Factura getFactura() {
-		return factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
-	}
 
 	public int getCantidad() {
 		return cantidad;
@@ -57,12 +57,6 @@ public class FacturaDetalle {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	@Override
-	public String toString() {
-		return "FacturaDetalle [id=" + id + ", producto=" + producto + ", cantidad=" + cantidad
-			+ "]";
 	}
 	
 	

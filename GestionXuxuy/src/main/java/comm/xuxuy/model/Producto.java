@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -22,6 +23,11 @@ public class Producto {
 	private int stock;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
 	private List<FacturaDetalle> facturaDetalle = new ArrayList<FacturaDetalle>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	private List<ProformaDetalle> proformaDetalle = new ArrayList<ProformaDetalle>();
+	
+	@ManyToOne()
+	private Pedido pedido; 
 	
 	
 	

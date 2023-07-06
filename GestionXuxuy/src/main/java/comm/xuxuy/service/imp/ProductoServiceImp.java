@@ -20,14 +20,25 @@ public class ProductoServiceImp {
 		return productoRepository.findAll();
 	}
 	
-	public ProductoDTO getProductoByName(String name)
+	public ProductoDTO getProductoById(long id)
 	{
-		Producto producto =  productoRepository.findByNombre(name);
+		Producto producto =  productoRepository.findById(id).get();
 		ProductoDTO productoRespuesta = new ProductoDTO();
 		productoRespuesta.setId(producto.getId());
 		productoRespuesta.setNombre(producto.getNombre());
 		productoRespuesta.setPrecio(producto.getPrecio());
 		productoRespuesta.setStock(producto.getStock());
 		return productoRespuesta;
+	}
+	public void actualizarStockProductos(List<ProductoDTO>productos)
+	{
+		Producto producto = new Producto();
+		for(ProductoDTO product: productos)
+		{
+			producto = productoRepository.findById(product.getId()).get();
+			producto.setStock(producto.getStock()-product.getCantidad());
+			productoRepository.save(producto); 
+		}
+		
 	}
 }

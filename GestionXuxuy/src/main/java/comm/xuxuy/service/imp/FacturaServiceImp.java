@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 
 import comm.xuxuy.dtos.ProductoDTO;
 import comm.xuxuy.dtos.ProformaDTO;
+import comm.xuxuy.model.Cliente;
 import comm.xuxuy.model.Factura;
 import comm.xuxuy.model.FacturaDetalle;
 import comm.xuxuy.model.Producto;
+import comm.xuxuy.model.ProformaDetalle;
+import comm.xuxuy.repository.ClienteDAO;
 import comm.xuxuy.repository.FacturaDAO;
 import comm.xuxuy.repository.ProductoDAO;
 import comm.xuxuy.service.FacturaService;
@@ -23,39 +26,40 @@ public class FacturaServiceImp implements FacturaService {
 
 	@Autowired
 	private ProductoDAO productoRepository;
+	
+	@Autowired
+	private ClienteDAO clienteRepository; 
 	@Override
 	public Factura generarFactura(ProformaDTO proforma) {
 		
-	   System.out.println(proforma);
-		FacturaDetalle facturaDetalle = new FacturaDetalle();
-		Factura factura = new Factura(proforma.getNombreCliente(), proforma.getApellidoCliente(),proforma.getDniCliente()); 
+		Factura nuevaFactura = new Factura(); 
+		Cliente cliente = clienteRepository.findById(proforma.getIdCliente()).get();
+		nuevaFactura.setCliente(cliente);
+		nuevaFactura.setNumero(numero++);
+		FacturaDetalle detalleFactura = new FacturaDetalle(); 
+		for(ProductoDTO producto: proforma.getProductos())
+		{
+			
+			detalleFactura.setProducto(productoRepository.findById(producto.getId()).get());
+			detalleFactura.setCantidad(producto.getCantidad());
+			detalleFactura.setFactura(nuevaFactura);
+			nuevaFactura.getFacturaDetalle().add(detalleFactura);
+			detalleFactura = new FacturaDetalle(); 
+		}
 		
-        for(ProductoDTO producto : proforma.getProductos())
-        {
-         Producto productoBuscado = productoRepository.findById(producto.getId()).get();
-         facturaDetalle = new FacturaDetalle();
-         facturaDetalle.setProducto(productoBuscado);
-         facturaDetalle.setCantidad(producto.getCantidad());
-         facturaDetalle.setFactura(factura);
-         factura.getFacturaDetalle().add(facturaDetalle);
-        }
-        
-      
-        factura.setNumero(numero++);
-       // System.out.println(factura);
-        return factura;
+		return nuevaFactura; 
 	}
 
 	@Override
 	public ProformaDTO registrarFactura(Factura factura) {
-		facturaRepository.save(factura);
-		
-		
+		factura = facturaRepository.save(factura);
+
 		ProformaDTO facturaRespuesta = new ProformaDTO(); 
 		
-		facturaRespuesta.setNombreCliente(factura.getNombreCliente());
-		facturaRespuesta.setApellidoCliente(factura.getApellidoCliente());
-		facturaRespuesta.setDniCliente(factura.getDniCliente());
+		facturaRespuesta.setId(factura.getId());
+		facturaRespuesta.setNombreCliente(factura.getCliente().getNombre());
+		facturaRespuesta.setApellidoCliente(factura.getCliente().getApellido());
+		facturaRespuesta.setDniCliente(factura.getCliente().getDni());
 		for(FacturaDetalle detalle : factura.getFacturaDetalle())
 		{
 			Producto producto = detalle.getProducto();
